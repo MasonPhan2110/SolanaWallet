@@ -1,25 +1,11 @@
 import 'package:flutter/material.dart';
 
-class HelpPage extends StatelessWidget {
+class HelpPage extends StatefulWidget {
   const HelpPage({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: helpPage(),
-    );
-  }
+  HelpPageState createState() => HelpPageState();
 }
-
-class helpPage extends StatefulWidget {
-  const helpPage({Key? key}) : super(key: key);
-
-  @override
-  State<helpPage> createState() => _helpPage();
-}
-
-class _helpPage extends State<helpPage> {
+class HelpPageState extends State<HelpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold();

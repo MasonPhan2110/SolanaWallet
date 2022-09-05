@@ -1,27 +1,14 @@
 import 'package:flutter/material.dart';
 
-class TransactionsPage extends StatelessWidget {
+class TransactionsPage extends StatefulWidget {
   const TransactionsPage({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: transactionsPage(),
-    );
-  }
+  TransactionsPageState createState() => TransactionsPageState();
 }
-
-class transactionsPage extends StatefulWidget {
-  const transactionsPage({Key? key}) : super(key: key);
-
-  @override
-  State<transactionsPage> createState() => _transactionsPage();
-}
-
-class _transactionsPage extends State<transactionsPage> {
+class TransactionsPageState extends State<TransactionsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold();
   }
 }
+

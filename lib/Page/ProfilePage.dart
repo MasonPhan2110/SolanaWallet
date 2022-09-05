@@ -1,25 +1,10 @@
 import 'package:flutter/material.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: profilePage(),
-    );
-  }
+  ProfilePageState createState() => ProfilePageState();
 }
-
-class profilePage extends StatefulWidget {
-  const profilePage({Key? key}) : super(key: key);
-
-  @override
-  State<profilePage> createState() => _profilePageState();
-}
-
-class _profilePageState extends State<profilePage> {
+class ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold();

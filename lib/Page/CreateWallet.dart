@@ -1,25 +1,11 @@
 import 'package:flutter/material.dart';
 
-class CreateWallet extends StatelessWidget {
+class CreateWallet extends StatefulWidget {
   const CreateWallet({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: createWallet(),
-    );
-  }
+  CreateWalletState createState() => CreateWalletState();
 }
-
-class createWallet extends StatefulWidget {
-  const createWallet({Key? key}) : super(key: key);
-
-  @override
-  State<createWallet> createState() => _createWallet();
-}
-
-class _createWallet extends State<createWallet> {
+class CreateWalletState extends State<CreateWallet> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +13,7 @@ class _createWallet extends State<createWallet> {
         body: Container(
             padding: EdgeInsets.all(30),
             child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -38,8 +24,8 @@ class _createWallet extends State<createWallet> {
                         height: 50,
                         decoration: BoxDecoration(
                             image: DecorationImage(
-                          image: AssetImage('assets/images/logo.png'),
-                        )),
+                              image: AssetImage('assets/images/logo.png'),
+                            )),
                       ),
                       SizedBox(
                         width: 5,

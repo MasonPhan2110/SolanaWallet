@@ -2,26 +2,12 @@ import 'package:flutter/material.dart';
 
 import '../Widget.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: homePage(),
-    );
-  }
+  HomePageState createState() => HomePageState();
 }
-
-class homePage extends StatefulWidget {
-  const homePage({Key? key}) : super(key: key);
-
-  @override
-  State<homePage> createState() => _homePageState();
-}
-
-class _homePageState extends State<homePage> {
+class HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,8 +27,8 @@ class _homePageState extends State<homePage> {
                       height: 50,
                       decoration: BoxDecoration(
                           image: DecorationImage(
-                        image: AssetImage('assets/images/logo.png'),
-                      )),
+                            image: AssetImage('assets/images/logo.png'),
+                          )),
                     ),
                     SizedBox(
                       width: 5,
@@ -179,19 +165,19 @@ class _homePageState extends State<homePage> {
             ),
             Expanded(
                 child: GridView.count(
-              crossAxisCount: 4,
-              childAspectRatio: 0.7,
-              children: [
-                serviceWidget(img: "sendMoney", name: "Send\nMoney"),
-                serviceWidget(img: "receiveMoney", name: "Receive\nMoney"),
-                serviceWidget(img: "phone", name: "Mobile\nRecharge"),
-                serviceWidget(img: "electricity", name: "Electricity\nBill"),
-                serviceWidget(img: "tag", name: "Cashback\nOffer"),
-                serviceWidget(img: "movie", name: "Movie\nTicket"),
-                serviceWidget(img: "flight", name: "Flight\nTicket"),
-                serviceWidget(img: "more", name: "More\n"),
-              ],
-            ))
+                  crossAxisCount: 4,
+                  childAspectRatio: 0.7,
+                  children: [
+                    serviceWidget(img: "sendMoney", name: "Send\nMoney"),
+                    serviceWidget(img: "receiveMoney", name: "Receive\nMoney"),
+                    serviceWidget(img: "phone", name: "Mobile\nRecharge"),
+                    serviceWidget(img: "electricity", name: "Electricity\nBill"),
+                    serviceWidget(img: "tag", name: "Cashback\nOffer"),
+                    serviceWidget(img: "movie", name: "Movie\nTicket"),
+                    serviceWidget(img: "flight", name: "Flight\nTicket"),
+                    serviceWidget(img: "more", name: "More\n"),
+                  ],
+                ))
           ],
         ),
       ),

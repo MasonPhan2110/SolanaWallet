@@ -1,25 +1,11 @@
 import 'package:flutter/material.dart';
 
-class SettingsPage extends StatelessWidget {
+class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: settingsPage(),
-    );
-  }
+  SettingsPageState createState() => SettingsPageState();
 }
-
-class settingsPage extends StatefulWidget {
-  const settingsPage({Key? key}) : super(key: key);
-
-  @override
-  State<settingsPage> createState() => _settingsPage();
-}
-
-class _settingsPage extends State<settingsPage> {
+class SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
