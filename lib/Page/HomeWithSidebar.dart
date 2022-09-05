@@ -30,7 +30,7 @@ class homeWithSideBar extends StatefulWidget {
 class _homeWithSideBarState extends State<homeWithSideBar>
     with TickerProviderStateMixin {
   bool sideBarActive = false;
-  String page="Home";
+  String page = "Home";
   AnimationController? rotationController;
 
   @override
@@ -64,20 +64,6 @@ class _homeWithSideBarState extends State<homeWithSideBar>
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Container(
-                            width: 50,
-                            height: 50,
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Color(0xFFF1F3F6),
-                                image: DecorationImage(
-                                    image:
-                                        AssetImage('assets/images/avatar4.png'),
-                                    fit: BoxFit.contain)),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
                           Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -116,24 +102,28 @@ class _homeWithSideBarState extends State<homeWithSideBar>
                 ],
               )),
               Container(
-                padding: EdgeInsets.all(20),
-                child: InkWell(
-                  onTap: (){ Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => MyHomePage()));},
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.power_settings_new,
-                        size: 30,
-                      ),
-                      Text(
-                        "Logout",
-                        style:
-                        TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
-                      )
-                    ],
-                  ),
-                )
-              ),
+                  padding: EdgeInsets.all(20),
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) => MyHomePage()));
+                    },
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.power_settings_new,
+                          size: 30,
+                        ),
+                        Text(
+                          "Logout",
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.w700),
+                        )
+                      ],
+                    ),
+                  )),
               Container(
                 alignment: Alignment.bottomLeft,
                 padding: EdgeInsets.all(20),
@@ -168,11 +158,17 @@ class _homeWithSideBarState extends State<homeWithSideBar>
                 ),
                 child: ClipRRect(
                   borderRadius: BorderRadius.all(Radius.circular(40)),
-                  child: (page == "Home") ? HomePage()
-                      :(page == "Profile") ? ProfilePage()
-                      :(page == "Accounts") ? AccountsPage()
-                      :(page == "Transactions")? TransactionsPage()
-                      :(page == "Settings") ? SettingsPage() : HelpPage(),
+                  child: (page == "Home")
+                      ? HomePage()
+                      : (page == "Profile")
+                          ? ProfilePage()
+                          : (page == "Accounts")
+                              ? AccountsPage()
+                              : (page == "Transactions")
+                                  ? TransactionsPage()
+                                  : (page == "Settings")
+                                      ? SettingsPage()
+                                      : HelpPage(),
                 ),
               ),
             ),
@@ -209,31 +205,37 @@ class _homeWithSideBarState extends State<homeWithSideBar>
 
   InkWell navigatorTitle(String name) {
     return InkWell(
-      onTap: (){page=name; setState(() {
-        print(name);
-      });},
+      onTap: () {
+        page = name;
+        setState(() {
+          print(name);
+        });
+      },
       child: Row(
-          children: [
-            if (page == name) Container(
+        children: [
+          if (page == name)
+            Container(
               width: 5,
               height: 60,
               color: Color(0xFFFFAC30),
-            ) else Container(
+            )
+          else
+            Container(
               width: 5,
               height: 60,
             ),
-            SizedBox(
-              width: 10,
-              height: 60,
+          SizedBox(
+            width: 10,
+            height: 60,
+          ),
+          Text(
+            name,
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: (page == name) ? FontWeight.w700 : FontWeight.w400,
             ),
-            Text(
-              name,
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: (page == name) ? FontWeight.w700 : FontWeight.w400,
-              ),
-            )
-          ],
+          )
+        ],
       ),
     );
   }

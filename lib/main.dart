@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:walletsolana/Page/CreateWallet.dart';
 import 'package:walletsolana/Page/HomePage.dart';
+import 'package:walletsolana/Page/ImportWallet.dart';
 import 'Page/HomeWithSidebar.dart';
+import 'package:location/location.dart';
 
 void main() {
   runApp(const MyApp());
@@ -130,7 +133,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             Text(
                               "Create Wallet",
                               style: TextStyle(
-                                  fontSize: 14, fontWeight: FontWeight.w700),
+                                  fontSize: 16, fontWeight: FontWeight.w700),
                             ),
                             Icon(
                               Icons.arrow_forward_ios,
@@ -143,12 +146,31 @@ class _MyHomePageState extends State<MyHomePage> {
                 SizedBox(
                   height: 10,
                 ),
-                Center(
-                  child: Text(
-                    "Create an account",
-                    style: TextStyle(fontSize: 16),
-                  ),
-                )
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Already have wallet? ",
+                      style: TextStyle(fontSize: 15),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    ImportWallet()));
+                      },
+                      child: Text(
+                        "Import Wallet",
+                        style: TextStyle(
+                            fontSize: 15,
+                            color: Color(0xFF57D9F4),
+                            fontWeight: FontWeight.w800),
+                      ),
+                    )
+                  ],
+                ),
               ],
             ),
           )
@@ -172,7 +194,13 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void openHomePage() {
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => HomeWithSideBar()));
+    // Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => HomeWithSideBar()));
+    Navigator.push(context,
+        MaterialPageRoute(builder: (BuildContext context) => CreateWallet()));
     // Navigator.of(context,rootNavigator: true).pushNamed('/homePage');
+  }
+
+  void getLocations() async {
+    // bool serviceEnabled = await location.serviceEnabled();
   }
 }

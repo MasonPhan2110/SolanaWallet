@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../Widget.dart';
+
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -149,9 +151,9 @@ class _homePageState extends State<homePage> {
                       size: 40,
                     ),
                   ),
-                  avatarWidget("avatar1", "Mason"),
-                  avatarWidget("avatar2", "Victor"),
-                  avatarWidget("avatar3", "Kevin"),
+                  avatarWidget(img: "avatar1", name: "Mason"),
+                  avatarWidget(img: "avatar2", name: "Victor"),
+                  avatarWidget(img: "avatar3", name: "Kevin"),
                 ],
               ),
             ),
@@ -180,86 +182,19 @@ class _homePageState extends State<homePage> {
               crossAxisCount: 4,
               childAspectRatio: 0.7,
               children: [
-                serviceWidget("sendMoney", "Send\nMoney"),
-                serviceWidget("receiveMoney", "Receive\nMoney"),
-                serviceWidget("phone", "Mobile\nRecharge"),
-                serviceWidget("electricity", "Electricity\nBill"),
-                serviceWidget("tag", "Cashback\nOffer"),
-                serviceWidget("movie", "Movie\nTicket"),
-                serviceWidget("flight", "Flight\nTicket"),
-                serviceWidget("more", "More\n"),
+                serviceWidget(img: "sendMoney", name: "Send\nMoney"),
+                serviceWidget(img: "receiveMoney", name: "Receive\nMoney"),
+                serviceWidget(img: "phone", name: "Mobile\nRecharge"),
+                serviceWidget(img: "electricity", name: "Electricity\nBill"),
+                serviceWidget(img: "tag", name: "Cashback\nOffer"),
+                serviceWidget(img: "movie", name: "Movie\nTicket"),
+                serviceWidget(img: "flight", name: "Flight\nTicket"),
+                serviceWidget(img: "more", name: "More\n"),
               ],
             ))
           ],
         ),
       ),
-    );
-  }
-
-  Container avatarWidget(String img, String name) {
-    return Container(
-      margin: EdgeInsets.only(right: 10),
-      height: 150,
-      width: 120,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(15)),
-          color: Color(0xFFF1F3F6)),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Container(
-            height: 60,
-            width: 60,
-            decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.white,
-                image: DecorationImage(
-                    image: AssetImage('assets/images/$img.png'),
-                    fit: BoxFit.contain),
-                border: Border.all(color: Colors.black, width: 2)),
-          ),
-          Text(name,
-              style: TextStyle(
-                fontSize: 16,
-                fontFamily: 'avenir',
-                fontWeight: FontWeight.w700,
-              ))
-        ],
-      ),
-    );
-  }
-
-  Column serviceWidget(String img, String name) {
-    return Column(
-      children: [
-        Expanded(
-            child: InkWell(
-          onTap: () {},
-          child: Container(
-            margin: EdgeInsets.all(4),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(20)),
-              color: Color(0xFFF1F3F6),
-            ),
-            child: Center(
-              child: Container(
-                margin: EdgeInsets.all(25),
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage('assets/images/$img.png'))),
-              ),
-            ),
-          ),
-        )),
-        SizedBox(
-          height: 5,
-        ),
-        Text(
-          name,
-          style: TextStyle(fontFamily: 'avenir', fontSize: 14),
-          textAlign: TextAlign.center,
-        )
-      ],
     );
   }
 }

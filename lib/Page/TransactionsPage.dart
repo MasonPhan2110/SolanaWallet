@@ -11,6 +11,7 @@ class TransactionsPage extends StatelessWidget {
     );
   }
 }
+
 class transactionsPage extends StatefulWidget {
   const transactionsPage({Key? key}) : super(key: key);
 
@@ -24,4 +25,3 @@ class _transactionsPage extends State<transactionsPage> {
     return Scaffold();
   }
 }
-

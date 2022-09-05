@@ -11,6 +11,7 @@ class HelpPage extends StatelessWidget {
     );
   }
 }
+
 class helpPage extends StatefulWidget {
   const helpPage({Key? key}) : super(key: key);
 
@@ -24,4 +25,3 @@ class _helpPage extends State<helpPage> {
     return Scaffold();
   }
 }
-

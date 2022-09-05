@@ -11,6 +11,7 @@ class AccountsPage extends StatelessWidget {
     );
   }
 }
+
 class accountsPage extends StatefulWidget {
   const accountsPage({Key? key}) : super(key: key);
 
@@ -24,4 +25,3 @@ class _accountsPage extends State<accountsPage> {
     return Scaffold();
   }
 }
-

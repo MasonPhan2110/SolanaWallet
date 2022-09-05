@@ -11,6 +11,7 @@ class ProfilePage extends StatelessWidget {
     );
   }
 }
+
 class profilePage extends StatefulWidget {
   const profilePage({Key? key}) : super(key: key);
 
@@ -24,4 +25,3 @@ class _profilePageState extends State<profilePage> {
     return Scaffold();
   }
 }
-
