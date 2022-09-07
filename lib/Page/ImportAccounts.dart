@@ -77,6 +77,7 @@ class ImportAccountState extends State<ImportAccount> {
                 height: 60,
               ),
               TextField(
+                maxLines: 1,
                 obscureText: true,
                 enableSuggestions: false,
                 autocorrect: false,
