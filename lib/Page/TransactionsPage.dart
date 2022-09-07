@@ -5,10 +5,10 @@ class TransactionsPage extends StatefulWidget {
 
   TransactionsPageState createState() => TransactionsPageState();
 }
+
 class TransactionsPageState extends State<TransactionsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold();
   }
 }
-

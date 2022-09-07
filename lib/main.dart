@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:walletsolana/Page/CreateWallet.dart';
 import 'package:walletsolana/Page/HomePage.dart';
-import 'package:walletsolana/Page/ImportWallet.dart';
+import 'package:walletsolana/Page/ImportWalletSeedPhrase.dart';
 import 'Page/HomeWithSidebar.dart';
 import 'package:location/location.dart';
 

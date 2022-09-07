@@ -5,6 +5,7 @@ class HelpPage extends StatefulWidget {
 
   HelpPageState createState() => HelpPageState();
 }
+
 class HelpPageState extends State<HelpPage> {
   @override
   Widget build(BuildContext context) {

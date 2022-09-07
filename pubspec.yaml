@@ -37,6 +37,9 @@ dependencies:
   intl: ^0.17.0
   location: ^4.2.0
   solana: ^0.26.0
+  sqflite:
+  path:
+  language_tool:
 
 dev_dependencies:
   flutter_test:

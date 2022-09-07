@@ -5,6 +5,7 @@ class SettingsPage extends StatefulWidget {
 
   SettingsPageState createState() => SettingsPageState();
 }
+
 class SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:walletsolana/Page/AccountsPage.dart';
 import 'package:walletsolana/Page/HelpPage.dart';
@@ -15,10 +14,12 @@ class HomeWithSideBar extends StatefulWidget {
   homeWithSideBarState createState() => homeWithSideBarState();
 }
 
-class homeWithSideBarState extends State<HomeWithSideBar> with TickerProviderStateMixin{
+class homeWithSideBarState extends State<HomeWithSideBar>
+    with TickerProviderStateMixin {
   bool sideBarActive = false;
   String page = "Home";
   AnimationController? rotationController;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -26,6 +27,7 @@ class homeWithSideBarState extends State<HomeWithSideBar> with TickerProviderSta
         AnimationController(duration: Duration(milliseconds: 200), vsync: this);
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,7 +44,7 @@ class homeWithSideBarState extends State<HomeWithSideBar> with TickerProviderSta
                     width: MediaQuery.of(context).size.width * 0.6,
                     decoration: BoxDecoration(
                       borderRadius:
-                      BorderRadius.only(bottomRight: Radius.circular(60)),
+                          BorderRadius.only(bottomRight: Radius.circular(60)),
                       color: Colors.white,
                     ),
                     child: Center(
@@ -76,16 +78,16 @@ class homeWithSideBarState extends State<HomeWithSideBar> with TickerProviderSta
               ),
               Expanded(
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      navigatorTitle("Home"),
-                      navigatorTitle("Profile"),
-                      navigatorTitle("Accounts"),
-                      navigatorTitle("Transactions"),
-                      navigatorTitle("Settings"),
-                      navigatorTitle("Help"),
-                    ],
-                  )),
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  navigatorTitle("Home"),
+                  navigatorTitle("Profile"),
+                  navigatorTitle("Accounts"),
+                  navigatorTitle("Transactions"),
+                  navigatorTitle("Settings"),
+                  navigatorTitle("Help"),
+                ],
+              )),
               Container(
                   padding: EdgeInsets.all(20),
                   child: InkWell(
@@ -143,14 +145,14 @@ class homeWithSideBarState extends State<HomeWithSideBar> with TickerProviderSta
                   child: (page == "Home")
                       ? HomePage()
                       : (page == "Profile")
-                      ? ProfilePage()
-                      : (page == "Accounts")
-                      ? AccountsPage()
-                      : (page == "Transactions")
-                      ? TransactionsPage()
-                      : (page == "Settings")
-                      ? SettingsPage()
-                      : HelpPage(),
+                          ? ProfilePage()
+                          : (page == "Accounts")
+                              ? AccountsPage()
+                              : (page == "Transactions")
+                                  ? TransactionsPage()
+                                  : (page == "Settings")
+                                      ? SettingsPage()
+                                      : HelpPage(),
                 ),
               ),
             ),
@@ -160,30 +162,31 @@ class homeWithSideBarState extends State<HomeWithSideBar> with TickerProviderSta
             top: 20,
             child: (sideBarActive)
                 ? IconButton(
-              padding: EdgeInsets.all(30),
-              onPressed: closeSideBar,
-              icon: Icon(
-                Icons.close,
-                color: Colors.black,
-                size: 30,
-              ),
-            )
+                    padding: EdgeInsets.all(30),
+                    onPressed: closeSideBar,
+                    icon: Icon(
+                      Icons.close,
+                      color: Colors.black,
+                      size: 30,
+                    ),
+                  )
                 : InkWell(
-              onTap: openSideBar,
-              child: Container(
-                margin: EdgeInsets.all(30),
-                height: 25,
-                width: 25,
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage('assets/images/menu.png'))),
-              ),
-            ),
+                    onTap: openSideBar,
+                    child: Container(
+                      margin: EdgeInsets.all(30),
+                      height: 25,
+                      width: 25,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage('assets/images/menu.png'))),
+                    ),
+                  ),
           )
         ],
       ),
     );
   }
+
   void closeSideBar() {
     sideBarActive = false;
     setState(() {});
@@ -193,6 +196,7 @@ class homeWithSideBarState extends State<HomeWithSideBar> with TickerProviderSta
     sideBarActive = true;
     setState(() {});
   }
+
   InkWell navigatorTitle(String name) {
     return InkWell(
       onTap: () {
@@ -230,5 +234,3 @@ class homeWithSideBarState extends State<HomeWithSideBar> with TickerProviderSta
     );
   }
 }
-
-

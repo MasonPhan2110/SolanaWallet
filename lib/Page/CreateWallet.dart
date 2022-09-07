@@ -5,6 +5,7 @@ class CreateWallet extends StatefulWidget {
 
   CreateWalletState createState() => CreateWalletState();
 }
+
 class CreateWalletState extends State<CreateWallet> {
   @override
   Widget build(BuildContext context) {
@@ -13,7 +14,7 @@ class CreateWalletState extends State<CreateWallet> {
         body: Container(
             padding: EdgeInsets.all(30),
             child:
-            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -24,8 +25,8 @@ class CreateWalletState extends State<CreateWallet> {
                         height: 50,
                         decoration: BoxDecoration(
                             image: DecorationImage(
-                              image: AssetImage('assets/images/logo.png'),
-                            )),
+                          image: AssetImage('assets/images/logo.png'),
+                        )),
                       ),
                       SizedBox(
                         width: 5,
