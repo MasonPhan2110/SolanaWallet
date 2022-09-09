@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:walletsolana/DatabaseHelper.dart';
@@ -12,7 +14,25 @@ class Welcomeback extends StatefulWidget {
 }
 
 class WelcomebackState extends State<Welcomeback> {
+  String formattedTime = "";
   String pass = "";
+  late Timer _timer;
+  @override
+  void initState() {
+    super.initState();
+    formattedTime = getHourMinute();
+    _timer = Timer.periodic(const Duration(seconds: 5), (timer) => _update());
+  }
+  void _update() {
+    if(!mounted){
+      _timer.cancel() ;
+      return;
+    }
+    setState(() {
+      formattedTime = getHourMinute();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +56,7 @@ class WelcomebackState extends State<Welcomeback> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      getHourMinute(),
+                      formattedTime,
                       style: TextStyle(
                         fontSize: 30,
                         fontFamily: 'avenir',
@@ -167,8 +187,8 @@ class WelcomebackState extends State<Welcomeback> {
     DatabaseHelper _dbHelper = DatabaseHelper();
     List<User> listUsers =  await _dbHelper.getUsers();
     if(listUsers[0].pass == pass) {
-      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-          builder: (BuildContext context) => HomeWithSideBar()), (route) => false);
+      Navigator.pushReplacement(context, MaterialPageRoute(
+          builder: (BuildContext context) => HomeWithSideBar()));
     } else {
       const snackBar = SnackBar(
         content: Text(

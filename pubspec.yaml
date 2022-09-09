@@ -40,6 +40,7 @@ dependencies:
   sqflite:
   path:
   language_tool:
+  http: ^0.13.5
 
 dev_dependencies:
   flutter_test:

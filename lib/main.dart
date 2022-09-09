@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -13,13 +14,24 @@ import 'Page/HomeWithSidebar.dart';
 import 'package:location/location.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(SolanaWallet());
 }
 
-class MyApp extends StatelessWidget {
-  MyApp({Key? key}) : super(key: key);
+class SolanaWallet extends StatefulWidget {
+  const SolanaWallet({Key? key}) : super(key: key);
+
+  @override
+  State<SolanaWallet> createState() => _SolanaWalletState();
+}
+
+class _SolanaWalletState extends State<SolanaWallet> {
   int userCount = 0;
-  // This widget is the root of your application.
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getUsersCount();
+  }
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -31,6 +43,11 @@ class MyApp extends StatelessWidget {
   Future<void> getUsersCount() async{
     DatabaseHelper _dbHelper = DatabaseHelper();
     List<User> listUser = await _dbHelper.getUsers();
+    print(listUser[0]);
     userCount =  listUser.length;
+    setState(() {
+
+    });
   }
 }
+

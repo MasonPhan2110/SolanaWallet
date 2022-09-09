@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:walletsolana/Page/CreateWallet.dart';
@@ -11,6 +13,23 @@ class Welcome extends StatefulWidget {
 }
 
 class WelcomeState extends State<Welcome> {
+  String formattedTime = "";
+  late Timer _timer;
+  @override
+  void initState() {
+    super.initState();
+    formattedTime = getHourMinute();
+    _timer = Timer.periodic(const Duration(seconds: 5), (timer) => _update());
+  }
+  void _update() {
+    if(!mounted){
+      _timer.cancel() ;
+      return;
+    }
+    setState(() {
+      formattedTime = getHourMinute();
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +53,7 @@ class WelcomeState extends State<Welcome> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      getHourMinute(),
+                      formattedTime,
                       style: TextStyle(
                         fontSize: 30,
                         fontFamily: 'avenir',
@@ -176,7 +195,7 @@ class WelcomeState extends State<Welcome> {
 
   void openHomePage() {
     // Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => HomeWithSideBar()));
-    Navigator.push(context,
+    Navigator.pushReplacement(context,
         MaterialPageRoute(builder: (BuildContext context) => CreateWallet()));
     setState(() {
 

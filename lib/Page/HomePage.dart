@@ -1,14 +1,33 @@
-import 'package:flutter/material.dart';
+import 'dart:async';
 
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:walletsolana/Setting/Config.dart';
+
+import '../APICall.dart';
 import '../Widget.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
-
+  final String walletAddress;
+  const HomePage({Key? key, required this.walletAddress}) : super(key: key);
   HomePageState createState() => HomePageState();
 }
 
 class HomePageState extends State<HomePage> {
+  double balance = 0.0;
+  late Timer _timer;
+  @override
+  void initState() {
+    super.initState();
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) => _update());
+  }
+  void _update() async {
+    if(!mounted){
+      return;
+    }
+    setState(() {
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,10 +91,27 @@ class HomePageState extends State<HomePage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        "20 Sol",
-                        style: TextStyle(
-                            fontSize: 22, fontWeight: FontWeight.w700),
+                      FutureBuilder(
+                        future: getBalanceOfWallet(widget.walletAddress),
+                        builder: (BuildContext context, AsyncSnapshot snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return Text(
+                              "$balance Sol",
+                              style: TextStyle(
+                                  fontSize: 22, fontWeight: FontWeight.w700),
+                            );
+                          }
+                          if(snapshot.hasData) {
+                            balance = snapshot.data;
+                            return Text(
+                              "${snapshot.data} Sol",
+                              style: TextStyle(
+                                  fontSize: 22, fontWeight: FontWeight.w700),
+                            );
+                          }
+                          return Container();
+                        },
                       ),
                       SizedBox(
                         height: 5,
@@ -87,16 +123,19 @@ class HomePageState extends State<HomePage> {
                       )
                     ],
                   ),
-                  Container(
-                    height: 60,
-                    width: 60,
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle, color: Color(0xFFFFac30)),
-                    child: Icon(
-                      Icons.add,
-                      size: 30,
+                  GestureDetector(
+                    onTap: onAirdropTap,
+                    child: Container(
+                      height: 60,
+                      width: 60,
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle, color: Color(0xFFFFac30)),
+                      child: Icon(
+                        Icons.add,
+                        size: 30,
+                      ),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
@@ -184,4 +223,114 @@ class HomePageState extends State<HomePage> {
       ),
     );
   }
+
+  Future<double> getBalanceOfWallet(String _walletAddress) async {
+    APICall apiCall = APICall();
+    var balance = await apiCall.getBalance(_walletAddress);
+    return balance;
+  }
+  void onAirdropTap() {
+    print("On tap");
+    showModalBottomSheet(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20)
+      ),
+      isScrollControlled: true,
+        context: context,
+        builder: (BuildContext context) {
+          return modalBottomSheet();
+        }
+    );
+  }
+  Container modalBottomSheet() {
+    return Container(
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+          color: Colors.white),
+      height: MediaQuery.of(context).size.height * 0.75,
+      padding: EdgeInsets.all(20),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text("Deposit SOL", style: TextStyle(
+            fontWeight: FontWeight.w700,
+            fontSize: 20
+          ),),
+          SizedBox(height: 20,),
+          Image(image: AssetImage('assets/images/QRCode.png')),
+          SizedBox(height: 10,),
+          Container(
+              padding: EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                  color: Color(0xFFF1F3F6),
+                  borderRadius: BorderRadius.all(Radius.circular(20))),
+              child: Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Wallet 1 (${widget.walletAddress.substring(0, 6)}...${widget.walletAddress.substring(38)})",
+                      style: TextStyle(
+                          fontSize: 16, fontWeight: FontWeight.w700),
+                    ),
+                    InkWell(
+                      onTap: (){Clipboard.setData(ClipboardData(text: widget.walletAddress));},
+                      child: Container(
+                        padding: EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                            color: Color(0xFF32C7FF),
+                            borderRadius: BorderRadius.all(Radius.circular(10))),
+                        child: Text("Copy", style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                          fontFamily: 'ubuntu'
+                        ),),
+                      ),
+                    )
+                  ],
+                ),
+              )),
+          SizedBox(height: 40,),
+          InkWell(
+            onTap: (){getFaucet();},
+            child: Container(
+                padding: EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                    color: Color(0xFFFFac30),
+                    borderRadius: BorderRadius.all(Radius.circular(20))),
+                child: Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Faucet on ${Config().cluster}",
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.w700),
+                      ),
+                      Icon(
+                        Icons.arrow_forward_ios,
+                        size: 17,
+                      )
+                    ],
+                  ),
+                )),
+          ),
+        ],
+      ),
+    );
+  }
+  Future<void> getFaucet() async{
+    APICall apiCall = APICall();
+    await apiCall.requestAirdrop(widget.walletAddress, 1);
+    Navigator.pop(context);
+    setState(() {
+
+    });
+  }
+  // Future<void> getBalance() async{
+  //   APICall apiCall = APICall();
+  //   balance = await apiCall.getBalance(widget.walletAddress);
+  // }
 }
