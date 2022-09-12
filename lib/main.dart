@@ -32,6 +32,7 @@ class _SolanaWalletState extends State<SolanaWallet> {
     super.initState();
     getUsersCount();
   }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -40,14 +41,12 @@ class _SolanaWalletState extends State<SolanaWallet> {
       routes: {'/homePage': (context) => HomeWithSideBar()},
     );
   }
-  Future<void> getUsersCount() async{
-    DatabaseHelper _dbHelper = DatabaseHelper();
-    List<User> listUser = await _dbHelper.getUsers();
-    print(listUser[0]);
-    userCount =  listUser.length;
-    setState(() {
 
-    });
+  Future<void> getUsersCount() async {
+    DatabaseHelper _dbHelper = DatabaseHelper();
+    List<User> listUser = await _dbHelper.getUser();
+    print(listUser[0]);
+    userCount = listUser.length;
+    setState(() {});
   }
 }
-

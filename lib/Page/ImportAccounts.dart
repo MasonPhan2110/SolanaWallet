@@ -162,12 +162,14 @@ class ImportAccountState extends State<ImportAccount> {
     setState(() {});
   }
 
-  Future<void> addPassword() async{
+  Future<void> addPassword() async {
     DatabaseHelper _dbHelper = DatabaseHelper();
-    List<User> listUser = await _dbHelper.getUsers();
+    List<User> listUser = await _dbHelper.getUser();
     User user = User(id: listUser.length, pass: pass);
     await _dbHelper.addUser(user);
-    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-        builder: (BuildContext context) => HomeWithSideBar()), (route) => false);
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (BuildContext context) => HomeWithSideBar()),
+        (route) => false);
   }
 }

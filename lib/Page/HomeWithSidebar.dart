@@ -68,7 +68,7 @@ class homeWithSideBarState extends State<HomeWithSideBar>
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                title,
+                                title != "" ? title : "Wallet Address",
                                 style: TextStyle(
                                     fontSize: 19, fontWeight: FontWeight.w700),
                               ),
@@ -164,7 +164,8 @@ class homeWithSideBarState extends State<HomeWithSideBar>
                               return CircularProgressIndicator();
                             }
                             if (snapshot.hasData) {
-                              return HomePage(walletAddress: snapshot.data.walletAddress);
+                              return HomePage(
+                                  walletAddress: snapshot.data.walletAddress);
                             }
                             return Container();
                           },

@@ -23,9 +23,10 @@ class WelcomebackState extends State<Welcomeback> {
     formattedTime = getHourMinute();
     _timer = Timer.periodic(const Duration(seconds: 5), (timer) => _update());
   }
+
   void _update() {
-    if(!mounted){
-      _timer.cancel() ;
+    if (!mounted) {
+      _timer.cancel();
       return;
     }
     setState(() {
@@ -89,57 +90,61 @@ class WelcomebackState extends State<Welcomeback> {
                   getDateTime(),
                   style: TextStyle(fontSize: 16, color: Colors.grey),
                 ),
-                SizedBox(height: 40,),
+                SizedBox(
+                  height: 40,
+                ),
                 Expanded(
                     child: Container(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Container(
-                            height: 70,
-                            width: 70,
-                            decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image: AssetImage('assets/images/logo.png'),
-                                    fit: BoxFit.contain)),
-                          ),
-                          Text(
-                            "eWallet",
-                            style: TextStyle(
-                                fontSize: 50,
-                                fontFamily: 'ubuntu',
-                                fontWeight: FontWeight.w600),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          TextField(
-                            maxLines: 1,
-                            obscureText: true,
-                            enableSuggestions: false,
-                            autocorrect: false,
-                            onChanged: (value) {
-                              pass = value;
-                              // checkEqual();
-                            },
-                            decoration: InputDecoration(
-                              labelText: "Password",
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(width: 3, color: Colors.blue),
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(width: 3, color: Colors.blue),
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                            ),
-                          ),
-                        ],
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Container(
+                        height: 70,
+                        width: 70,
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image: AssetImage('assets/images/logo.png'),
+                                fit: BoxFit.contain)),
                       ),
-                    )),
+                      Text(
+                        "eWallet",
+                        style: TextStyle(
+                            fontSize: 50,
+                            fontFamily: 'ubuntu',
+                            fontWeight: FontWeight.w600),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      TextField(
+                        maxLines: 1,
+                        obscureText: true,
+                        enableSuggestions: false,
+                        autocorrect: false,
+                        onChanged: (value) {
+                          pass = value;
+                          // checkEqual();
+                        },
+                        decoration: InputDecoration(
+                          labelText: "Password",
+                          enabledBorder: OutlineInputBorder(
+                            borderSide:
+                                const BorderSide(width: 3, color: Colors.blue),
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide:
+                                const BorderSide(width: 3, color: Colors.blue),
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                )),
                 InkWell(
-                  onTap: ()=>continueTap(),
+                  onTap: () => continueTap(),
                   child: Container(
                       padding: EdgeInsets.all(20),
                       decoration: BoxDecoration(
@@ -183,12 +188,15 @@ class WelcomebackState extends State<Welcomeback> {
     final String formatted = formatter.format(now);
     return formatted;
   }
+
   Future<void> continueTap() async {
     DatabaseHelper _dbHelper = DatabaseHelper();
-    List<User> listUsers =  await _dbHelper.getUsers();
-    if(listUsers[0].pass == pass) {
-      Navigator.pushReplacement(context, MaterialPageRoute(
-          builder: (BuildContext context) => HomeWithSideBar()));
+    List<User> listUsers = await _dbHelper.getUser();
+    if (listUsers[0].pass == pass) {
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (BuildContext context) => HomeWithSideBar()));
     } else {
       const snackBar = SnackBar(
         content: Text(

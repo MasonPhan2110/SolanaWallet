@@ -2,6 +2,7 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 import 'Model/User.dart';
+import 'Model/Users.dart';
 import 'Model/Wallet.dart';
 
 class DatabaseHelper {
@@ -11,6 +12,8 @@ class DatabaseHelper {
       await db.execute(
           "CREATE TABLE wallets(walletAddress TEXT PRIMARY KEY, date TEXT, title TEXT, seedphrase TEXT)");
       await db.execute("CREATE TABLE user(id INTEGER PRIMARY KEY, pass TEXT)");
+      await db.execute(
+          "CREATE TABLE users(id INTEGER PRIMARY KEY, wallet TEXT, title TEXT)");
     }, version: 1);
   }
 
@@ -39,11 +42,19 @@ class DatabaseHelper {
     });
   }
 
-  Future<List<User>> getUsers() async {
+  Future<List<User>> getUser() async {
     Database _db = await database();
     List<Map<String, dynamic>> usersMap = await _db.query('user');
     return List.generate(usersMap.length, (index) {
       return User(id: usersMap[index]['id'], pass: usersMap[index]['pass']);
+    });
+  }
+
+  Future<List<Users>> getUsers() async {
+    Database _db = await database();
+    List<Map<String, dynamic>> usersMap = await _db.query('users');
+    return List.generate(usersMap.length, (index) {
+      return Users(id: usersMap[index]['id'], wallet: usersMap[index]['wallet'], title: usersMap[index]['title']);
     });
   }
 }

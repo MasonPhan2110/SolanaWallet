@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:walletsolana/Page/SendSol/SendToAnother.dart';
 import 'package:walletsolana/Setting/Config.dart';
 
 import '../APICall.dart';
@@ -21,13 +22,14 @@ class HomePageState extends State<HomePage> {
     super.initState();
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) => _update());
   }
+
   void _update() async {
-    if(!mounted){
+    if (!mounted) {
       return;
     }
-    setState(() {
-    });
+    setState(() {});
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,7 +95,8 @@ class HomePageState extends State<HomePage> {
                     children: [
                       FutureBuilder(
                         future: getBalanceOfWallet(widget.walletAddress),
-                        builder: (BuildContext context, AsyncSnapshot snapshot) {
+                        builder:
+                            (BuildContext context, AsyncSnapshot snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
                             return Text(
@@ -102,7 +105,7 @@ class HomePageState extends State<HomePage> {
                                   fontSize: 22, fontWeight: FontWeight.w700),
                             );
                           }
-                          if(snapshot.hasData) {
+                          if (snapshot.hasData) {
                             balance = snapshot.data;
                             return Text(
                               "${snapshot.data} Sol",
@@ -166,15 +169,18 @@ class HomePageState extends State<HomePage> {
               scrollDirection: Axis.horizontal,
               child: Row(
                 children: [
-                  Container(
-                    height: 70,
-                    width: 70,
-                    margin: EdgeInsets.only(right: 20),
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle, color: Color(0xFFFFAC30)),
-                    child: Icon(
-                      Icons.add,
-                      size: 40,
+                  GestureDetector(
+                    onTap: onNewSendTap,
+                    child: Container(
+                      height: 70,
+                      width: 70,
+                      margin: EdgeInsets.only(right: 20),
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle, color: Color(0xFFFFAC30)),
+                      child: Icon(
+                        Icons.add,
+                        size: 40,
+                      ),
                     ),
                   ),
                   avatarWidget(img: "avatar1", name: "Mason"),
@@ -229,19 +235,87 @@ class HomePageState extends State<HomePage> {
     var balance = await apiCall.getBalance(_walletAddress);
     return balance;
   }
+
   void onAirdropTap() {
     print("On tap");
     showModalBottomSheet(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20)
-      ),
-      isScrollControlled: true,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        isScrollControlled: true,
         context: context,
         builder: (BuildContext context) {
           return modalBottomSheet();
-        }
+        });
+  }
+
+  void onNewSendTap() {
+    print("On tap");
+    showModalBottomSheet(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        isScrollControlled: true,
+        context: context,
+        builder: (BuildContext context) {
+          return modalBottomSheetForSend();
+        });
+  }
+
+  Container modalBottomSheetForSend() {
+    return Container(
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+          color: Colors.white),
+      height: MediaQuery.of(context).size.height * 0.25,
+      padding: EdgeInsets.all(20),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          rowForSend("Between your wallets", "transfer"),
+          rowForSend("To another Wallet", "coin"),
+        ],
+      ),
     );
   }
+
+  Container rowForSend(String title, String icon) {
+    return Container(
+      padding: EdgeInsets.all(19),
+      decoration: BoxDecoration(
+          border: Border(bottom: BorderSide(color: Colors.grey, width: 1))),
+      child: GestureDetector(
+        onTap: () {
+          if (icon == "coin") {
+            Navigator.pop(context);
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (BuildContext context) => SendToAnother()));
+          }
+        },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Image(
+              image: AssetImage('assets/images/$icon.png'),
+              width: 30,
+              height: 30,
+            ),
+            SizedBox(
+              width: 40,
+            ),
+            Expanded(child: Text(
+              title,
+              style: TextStyle(
+                  fontSize: 17,
+                  fontFamily: 'ubuntu',
+                  fontWeight: FontWeight.w400),
+            ))
+
+          ],
+        ),
+      ),
+    );
+  }
+
   Container modalBottomSheet() {
     return Container(
       decoration: BoxDecoration(
@@ -253,13 +327,17 @@ class HomePageState extends State<HomePage> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text("Deposit SOL", style: TextStyle(
-            fontWeight: FontWeight.w700,
-            fontSize: 20
-          ),),
-          SizedBox(height: 20,),
+          Text(
+            "Deposit SOL",
+            style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
+          ),
+          SizedBox(
+            height: 20,
+          ),
           Image(image: AssetImage('assets/images/QRCode.png')),
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
           Container(
               padding: EdgeInsets.all(20),
               decoration: BoxDecoration(
@@ -271,30 +349,40 @@ class HomePageState extends State<HomePage> {
                   children: [
                     Text(
                       "Wallet 1 (${widget.walletAddress.substring(0, 6)}...${widget.walletAddress.substring(38)})",
-                      style: TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.w700),
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
                     ),
                     InkWell(
-                      onTap: (){Clipboard.setData(ClipboardData(text: widget.walletAddress));},
+                      onTap: () {
+                        Clipboard.setData(
+                            ClipboardData(text: widget.walletAddress));
+                      },
                       child: Container(
                         padding: EdgeInsets.all(5),
                         decoration: BoxDecoration(
                             color: Color(0xFF32C7FF),
-                            borderRadius: BorderRadius.all(Radius.circular(10))),
-                        child: Text("Copy", style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                          fontFamily: 'ubuntu'
-                        ),),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10))),
+                        child: Text(
+                          "Copy",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: 'ubuntu'),
+                        ),
                       ),
                     )
                   ],
                 ),
               )),
-          SizedBox(height: 40,),
+          SizedBox(
+            height: 40,
+          ),
           InkWell(
-            onTap: (){getFaucet();},
+            onTap: () {
+              getFaucet();
+            },
             child: Container(
                 padding: EdgeInsets.all(20),
                 decoration: BoxDecoration(
@@ -321,13 +409,12 @@ class HomePageState extends State<HomePage> {
       ),
     );
   }
-  Future<void> getFaucet() async{
+
+  Future<void> getFaucet() async {
     APICall apiCall = APICall();
     await apiCall.requestAirdrop(widget.walletAddress, 1);
     Navigator.pop(context);
-    setState(() {
-
-    });
+    setState(() {});
   }
   // Future<void> getBalance() async{
   //   APICall apiCall = APICall();

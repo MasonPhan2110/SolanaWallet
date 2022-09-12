@@ -21,15 +21,17 @@ class WelcomeState extends State<Welcome> {
     formattedTime = getHourMinute();
     _timer = Timer.periodic(const Duration(seconds: 5), (timer) => _update());
   }
+
   void _update() {
-    if(!mounted){
-      _timer.cancel() ;
+    if (!mounted) {
+      _timer.cancel();
       return;
     }
     setState(() {
       formattedTime = getHourMinute();
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,35 +90,35 @@ class WelcomeState extends State<Welcome> {
                 ),
                 Expanded(
                     child: Container(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            height: 70,
-                            width: 70,
-                            decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image: AssetImage('assets/images/logo.png'),
-                                    fit: BoxFit.contain)),
-                          ),
-                          Text(
-                            "eWallet",
-                            style: TextStyle(
-                                fontSize: 50,
-                                fontFamily: 'ubuntu',
-                                fontWeight: FontWeight.w600),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            "Open An Account For \nDigital E-Wallet Solutions.\nInstant Payouts.\n\nJoin For Free",
-                            style: TextStyle(color: Colors.grey),
-                          )
-                        ],
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        height: 70,
+                        width: 70,
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image: AssetImage('assets/images/logo.png'),
+                                fit: BoxFit.contain)),
                       ),
-                    )),
+                      Text(
+                        "eWallet",
+                        style: TextStyle(
+                            fontSize: 50,
+                            fontFamily: 'ubuntu',
+                            fontWeight: FontWeight.w600),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        "Open An Account For \nDigital E-Wallet Solutions.\nInstant Payouts.\n\nJoin For Free",
+                        style: TextStyle(color: Colors.grey),
+                      )
+                    ],
+                  ),
+                )),
                 InkWell(
                   onTap: openHomePage,
                   child: Container(
@@ -158,9 +160,7 @@ class WelcomeState extends State<Welcome> {
                             MaterialPageRoute(
                                 builder: (BuildContext context) =>
                                     ImportWallet()));
-                        setState(() {
-
-                        });
+                        setState(() {});
                       },
                       child: Text(
                         "Import Wallet",
@@ -179,6 +179,7 @@ class WelcomeState extends State<Welcome> {
       ),
     );
   }
+
   String getDateTime() {
     final DateTime now = DateTime.now();
     final DateFormat formatter = DateFormat('MMM dd, yyyy | EEEE');
@@ -197,9 +198,7 @@ class WelcomeState extends State<Welcome> {
     // Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => HomeWithSideBar()));
     Navigator.pushReplacement(context,
         MaterialPageRoute(builder: (BuildContext context) => CreateWallet()));
-    setState(() {
-
-    });
+    setState(() {});
     // Navigator.of(context,rootNavigator: true).pushNamed('/homePage');
   }
 

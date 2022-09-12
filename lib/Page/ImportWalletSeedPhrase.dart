@@ -211,6 +211,7 @@ class ImportWalletState extends State<ImportWallet> {
       final String formatted = formatter.format(now);
       Wallets newWallet = Wallets(
           walletAddress: signer.address, date: formatted, seedphrase: seed);
+      print(newWallet);
       _dbHelper.addWallet(newWallet);
       Navigator.push(
           context,
