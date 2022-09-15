@@ -15,6 +15,7 @@ class Welcome extends StatefulWidget {
 class WelcomeState extends State<Welcome> {
   String formattedTime = "";
   late Timer _timer;
+
   @override
   void initState() {
     super.initState();

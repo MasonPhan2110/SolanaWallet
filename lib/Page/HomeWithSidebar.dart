@@ -272,8 +272,8 @@ class homeWithSideBarState extends State<HomeWithSideBar>
     return listWallets[0];
   }
 
-  // Future<void> getBalanceOfWallet(String _walletAddress) async {
-  //   APICall apiCall = APICall();
-  //   balance = await apiCall.getBalance(_walletAddress);
-  // }
+// Future<void> getBalanceOfWallet(String _walletAddress) async {
+//   APICall apiCall = APICall();
+//   balance = await apiCall.getBalance(_walletAddress);
+// }
 }

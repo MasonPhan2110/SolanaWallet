@@ -5,24 +5,27 @@ import 'package:walletsolana/Page/SendSol/InputWalletAddress.dart';
 import 'package:walletsolana/Widget.dart';
 
 class SendToAnother extends StatefulWidget {
-  const SendToAnother({Key? key}) : super(key: key);
+  final String wallet;
+  const SendToAnother({Key? key, required this.wallet}) : super(key: key);
 
   SendToAnotherState createState() => SendToAnotherState();
 }
 
 class SendToAnotherState extends State<SendToAnother> {
   DatabaseHelper _dbHelper = DatabaseHelper();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
         body: Container(
-            padding: EdgeInsets.only(left: 30, right: 30,
-            top: 50),
+            padding: EdgeInsets.only(left: 30, right: 30, top: 50),
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               GestureDetector(
-                onTap: (){Navigator.pop(context);},
+                onTap: () {
+                  Navigator.pop(context);
+                },
                 child: Container(
                     width: 26,
                     height: 26,
@@ -35,77 +38,90 @@ class SendToAnotherState extends State<SendToAnother> {
               SizedBox(
                 height: 20,
               ),
-                  Text("You want to transfer to ...",
-                  style: TextStyle(
+              Text(
+                "You want to transfer to ...",
+                style: TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.w800,
-                    fontFamily: 'ubuntu'
-                  ),),
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.3,),
-                  GestureDetector(
-                    onTap: (){
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (BuildContext context) => InputWalletAddress()));
-                    },
-                    child: Row(
-                      children: [
-                        Container(
-                          height: 48,
-                          width: 48,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle, color: Color(0xFFF5F5F5)),
-                          child: Icon(
-                            Icons.add,
-                            size: 24,
-                          ),
-                        ),
-                        SizedBox(width: 10,),
-                        Expanded(child: Text("New Receiver", style: TextStyle(
-                            fontFamily: 'avenir',
-                            fontSize: 19,
-                            fontWeight: FontWeight.w400
-                        ),))
-                        ,
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 20,),
-                  Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Color(0xFFF5F5F5)),
-                      borderRadius: BorderRadius.circular(10)
-                    ),
-                    child: TextField(
-                      maxLines: 1,
-                      decoration: InputDecoration(
-                          hintText: 'Search for receiver',
-                          prefixIcon: Icon(Icons.search),
-                          border: InputBorder.none
+                    fontFamily: 'ubuntu'),
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.3,
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (BuildContext context) =>
+                              InputWalletAddress(wallet: widget.wallet)));
+                },
+                child: Row(
+                  children: [
+                    Container(
+                      height: 48,
+                      width: 48,
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle, color: Color(0xFFF5F5F5)),
+                      child: Icon(
+                        Icons.add,
+                        size: 24,
                       ),
                     ),
-                  ),
-                  Expanded(child: ScrollConfiguration(
-                    behavior: NoGlowBehavior(),
-                    child: FutureBuilder(
-                      future: _dbHelper.getUsers(),
-                      builder: (context, AsyncSnapshot<List<Users>> snapshot) {
-                        if(snapshot.connectionState == ConnectionState.waiting) {
-                          return CircularProgressIndicator();
-                        }
-                        if (snapshot.hasData) {
-                          return ListView.builder(
-                              itemCount: snapshot.data?.length,
-                            itemBuilder: ((context, index){
-                              return rowForReceiver(snapshot.data?[index].title, "solana");
-                            }),
-                          );
-                        }
-                        return Container();
-                      },
+                    SizedBox(
+                      width: 10,
                     ),
-                  ))
+                    Expanded(
+                        child: Text(
+                      "New Receiver",
+                      style: TextStyle(
+                          fontFamily: 'avenir',
+                          fontSize: 19,
+                          fontWeight: FontWeight.w400),
+                    )),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Container(
+                decoration: BoxDecoration(
+                    border: Border.all(color: Color(0xFFF5F5F5)),
+                    borderRadius: BorderRadius.circular(10)),
+                child: TextField(
+                  maxLines: 1,
+                  decoration: InputDecoration(
+                      hintText: 'Search for receiver',
+                      prefixIcon: Icon(Icons.search),
+                      border: InputBorder.none),
+                ),
+              ),
+              Expanded(
+                  child: ScrollConfiguration(
+                behavior: NoGlowBehavior(),
+                child: FutureBuilder(
+                  future: _dbHelper.getUsers(),
+                  builder: (context, AsyncSnapshot<List<Users>> snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return CircularProgressIndicator();
+                    }
+                    if (snapshot.hasData) {
+                      return ListView.builder(
+                        itemCount: snapshot.data?.length,
+                        itemBuilder: ((context, index) {
+                          return rowForReceiver(
+                              snapshot.data?[index].title, "solana");
+                        }),
+                      );
+                    }
+                    return Container();
+                  },
+                ),
+              ))
             ])));
   }
+
   Container rowForReceiver(String? title, String icon) {
     return Container(
       padding: EdgeInsets.all(19),

@@ -10,13 +10,16 @@ import '../Widget.dart';
 
 class HomePage extends StatefulWidget {
   final String walletAddress;
+
   const HomePage({Key? key, required this.walletAddress}) : super(key: key);
+
   HomePageState createState() => HomePageState();
 }
 
 class HomePageState extends State<HomePage> {
   double balance = 0.0;
   late Timer _timer;
+
   @override
   void initState() {
     super.initState();
@@ -263,7 +266,7 @@ class HomePageState extends State<HomePage> {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(20)),
           color: Colors.white),
-      height: MediaQuery.of(context).size.height * 0.25,
+      height: MediaQuery.of(context).size.height * 0.35,
       padding: EdgeInsets.all(20),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -271,6 +274,7 @@ class HomePageState extends State<HomePage> {
         children: [
           rowForSend("Between your wallets", "transfer"),
           rowForSend("To another Wallet", "coin"),
+          rowForSend("Scan QR Code", "scan-qr"),
         ],
       ),
     );
@@ -288,7 +292,7 @@ class HomePageState extends State<HomePage> {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (BuildContext context) => SendToAnother()));
+                    builder: (BuildContext context) => SendToAnother(wallet: widget.walletAddress)));
           }
         },
         child: Row(
@@ -302,14 +306,14 @@ class HomePageState extends State<HomePage> {
             SizedBox(
               width: 40,
             ),
-            Expanded(child: Text(
+            Expanded(
+                child: Text(
               title,
               style: TextStyle(
                   fontSize: 17,
                   fontFamily: 'ubuntu',
                   fontWeight: FontWeight.w400),
             ))
-
           ],
         ),
       ),
@@ -416,8 +420,8 @@ class HomePageState extends State<HomePage> {
     Navigator.pop(context);
     setState(() {});
   }
-  // Future<void> getBalance() async{
-  //   APICall apiCall = APICall();
-  //   balance = await apiCall.getBalance(widget.walletAddress);
-  // }
+// Future<void> getBalance() async{
+//   APICall apiCall = APICall();
+//   balance = await apiCall.getBalance(widget.walletAddress);
+// }
 }

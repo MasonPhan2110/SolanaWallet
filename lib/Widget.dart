@@ -84,6 +84,7 @@ class avatarWidget extends StatelessWidget {
     );
   }
 }
+
 class NoGlowBehavior extends ScrollBehavior {
   @override
   Widget buildViewportChrome(

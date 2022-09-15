@@ -26,6 +26,7 @@ class SolanaWallet extends StatefulWidget {
 
 class _SolanaWalletState extends State<SolanaWallet> {
   int userCount = 0;
+
   @override
   void initState() {
     // TODO: implement initState

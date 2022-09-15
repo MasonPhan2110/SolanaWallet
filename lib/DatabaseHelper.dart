@@ -54,7 +54,15 @@ class DatabaseHelper {
     Database _db = await database();
     List<Map<String, dynamic>> usersMap = await _db.query('users');
     return List.generate(usersMap.length, (index) {
-      return Users(id: usersMap[index]['id'], wallet: usersMap[index]['wallet'], title: usersMap[index]['title']);
+      return Users(
+          id: usersMap[index]['id'],
+          wallet: usersMap[index]['wallet'],
+          title: usersMap[index]['title']);
     });
+  }
+  Future<void> addUsers(Users users) async {
+    Database _db = await database();
+    await _db.insert('users', users.toMap(),
+        conflictAlgorithm: ConflictAlgorithm.replace);
   }
 }
